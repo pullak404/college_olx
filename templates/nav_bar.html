@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VSSUT Marketplace</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #f8f9fa;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .logo .title {
+      font-size: 40px;
+      font-weight: bold;
+      color: rgb(16, 83, 138);
+      cursor: pointer;
+    }
+
+    .logo .subtitle {
+      letter-spacing: 5px;
+      font-weight: bold;
+      font-size: 15px;
+      color: #666;
+      padding-left: 310px;
+      cursor: pointer;
+    }
+
+    .menu {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      position: relative;
+    }
+
+    .menu a,
+    .menu button {
+      text-decoration: none;
+      color: #333;
+      background: none;
+      border: none;
+      font-size: 21px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .menu button.sell {
+      background-color: rgb(58, 133, 219);
+      color: white;
+      transition: box-shadow 0.25s;
+      border-radius: 70px;
+      height: 44px;
+      width: 90px;
+      padding: 6px 12px;
+    }
+
+    .menu button.sell:hover {
+      background-color: #0056b3;
+      box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+    }
+
+    /* 🔽 NEW: Clean, thin arrow style */
+    .arrow {
+      width: 8px;
+      height: 8px;
+      border-left: 2px solid #333;
+      border-bottom: 2px solid #333;
+      transform: rotate(-45deg);
+      margin-top: 3px;
+    }
+
+    /* Dropdown Styles */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: white;
+      min-width: 180px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      z-index: 10;
+      padding: 8px 0;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 10px 15px;
+      color: #333;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f2f2f2;
+    }
+
+    .dropdown:hover .dropdown-content {
+  display: block;
+}
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="logo">
+      <div class="title">VSSUT Marketplace</div>
+      <div class="subtitle">INDIA</div>
+    </div>
+    <div class="menu">
+      
+      <!-- College dropdown with thin arrow -->
+      <div class="dropdown">
+        <a id="collegeBtn">College <span class="arrow"></span></a>
+        <div class="dropdown-content" id="collegeList">
+          <a href="#">VSSUT Burla</a>
+          <a href="#">IIT Bhubaneswar</a>
+          <a href="#">NIT Rourkela</a>
+          <a href="#">OUTR</a>
+          <a href="#">KIIT University</a>
+          <a href="#">Centurion University</a>
+        </div>
+      </div>
+
+      <a href="#">Categories</a>
+      <a href="#">Login</a>
+      <button class="sell">Sell</button>
+    </div>
+  </div>
+
+  <script>
+    const collegeBtn = document.getElementById('collegeBtn');
+    const dropdown = collegeBtn.parentElement;
+
+    collegeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      dropdown.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('active');
+      }
+    });
+  </script>
+
+</body>
+</html>
