@@ -26,3 +26,8 @@
 - [ ] login/sign up page
 - [ ] Product Page
 - [ ] Search Menu
+- [ ] Profile Page
+    - [ ] profile pic
+    - [ ] Year
+    - [ ] branch
+    - [ ] other ...

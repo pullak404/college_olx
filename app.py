@@ -1,7 +1,7 @@
 from flask import Flask,render_template,flash
 from flask_wtf import FlaskForm
 from wtforms import *
-from wtforms.validators import DataRequired
+from wtforms.validators import *
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timezone
 
@@ -31,16 +31,26 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     ItemName = db.Column(db.String(100), nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    available = db.Column(db.Boolen)
+    available = db.Column(db.Boolean)
     price = db.Column(db.Integer, nullable = False)
     date_added = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
 
 #Create a User Class
-class UserForm(FlaskForm):
-    name = StringField("Name",validators=[DataRequired()])
+class LoginForm(FlaskForm):
     email = StringField("Email",validators=[DataRequired()])
+    phone = IntegerField("Phone Number",validators=[DataRequired(),Length(min=10,max=10)])
+    passwd = PasswordField('New Password', [DataRequired(), EqualTo('confirm', message='Passwords must match')])
     submit = SubmitField("Submit")
+
+class SignUpForm(FlaskForm):
+    name = StringField("Name",validators=[DataRequired()])
+    email = StringField("Email",validators=[DataRequired(),Email()])
+    phone = IntegerField("Phone Number",validators=[DataRequired(),Length(min=10,max=10)])
+    passwd = PasswordField('New Password', [DataRequired(), EqualTo('confirm', message='Passwords must match')])
+    confirm  = PasswordField('Repeat Password')
+    submit = SubmitField("Submit")
+
 
 #Create a Form Class
 class ProductForm(FlaskForm):
@@ -52,17 +62,21 @@ def index():
     return render_template("index.html")
 
 # localhost:5000/user/pullak
-@app.route('/product')
-def blog(name):
-    return render_template("product.html",user_name=name)
+@app.route('/product/<ID>')
+def product(ID):
+    return render_template("product.html",ItemID=ID)
 
 @app.route('/login')
-def projects(name):
-    return render_template("login.html",user_name=name)
+def login():
+    return render_template("login.html")
 
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+@app.route('/sell')
+def sell():
+    return render_template('sell.html')
 
 
 #Custom Error Page
