@@ -1,7 +1,5 @@
 from flask import Flask,render_template,flash
-from flask_wtf import FlaskForm
-from wtforms import *
-from wtforms.validators import *
+from forms import SignUpForm,LoginForm
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timezone
 
@@ -36,27 +34,6 @@ class Product(db.Model):
     date_added = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
 
-#Create a User Class
-class LoginForm(FlaskForm):
-    email = StringField("Email",validators=[DataRequired()])
-    phone = IntegerField("Phone Number",validators=[DataRequired(),Length(min=10,max=10)])
-    passwd = PasswordField('New Password', [DataRequired(), EqualTo('confirm', message='Passwords must match')])
-    submit = SubmitField("Submit")
-
-class SignUpForm(FlaskForm):
-    name = StringField("Name",validators=[DataRequired()])
-    email = StringField("Email",validators=[DataRequired(),Email()])
-    phone = IntegerField("Phone Number",validators=[DataRequired(),Length(min=10,max=10)])
-    passwd = PasswordField('New Password', [DataRequired(), EqualTo('confirm', message='Passwords must match')])
-    confirm  = PasswordField('Repeat Password')
-    submit = SubmitField("Submit")
-
-
-#Create a Form Class
-class ProductForm(FlaskForm):
-    name = StringField("Whats your Name",validators=[DataRequired()])
-    submit = SubmitField("Submit")
-
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -68,7 +45,13 @@ def product(ID):
 
 @app.route('/login')
 def login():
-    return render_template("login.html")
+    form = LoginForm()
+    return render_template("login.html",form=form)
+
+@app.route('/signup')
+def signup():
+    form = SignUpForm()
+    return render_template('signup.html',form=form)
 
 @app.route('/contact')
 def contact():
@@ -90,3 +73,6 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template("500.html"),500
+
+if __name__ == '__main__':
+    app.run(debug=True)
